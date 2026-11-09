@@ -77,4 +77,4 @@ docker compose up -d
 | **コンテナ・インフラ** | Docker CLI, Docker Compose v2 (Docker-in-Docker) |
 | **クラウド・CLI** | GitHub CLI (`gh`), git |
 | **セキュリティ・品質** | Aqua Security Trivy, Stoplight Spectral CLI |
-| **エディタ拡張** | Kotlin, Java Extension Pack, Gradle, Spectral, Trivy, Google Antigravity |
+| **エディタ拡張** | Kotlin, Java Extension Pack, Gradle, Spectral, Trivy, Atlassian (Jira / Bitbucket), Google Antigravity |
