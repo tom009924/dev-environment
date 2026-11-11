@@ -11,6 +11,7 @@ RUN bash -c "source /usr/local/sdkman/bin/sdkman-init.sh \
     && rm -rf /usr/local/sdkman/tmp/*" \
     && bash -c "source /usr/local/share/nvm/nvm.sh \
     && nvm install 22 \
-    && nvm alias default 22"
+    && nvm alias default 22 \
+    && npm install -g @stoplight/spectral-cli @stoplight/spectral-owasp-ruleset --registry=https://registry.npmjs.org"
 
 ENV PATH="/usr/local/sdkman/candidates/kotlin/current/bin:${PATH}"
