@@ -78,3 +78,17 @@ docker compose up -d
 | **クラウド・CLI** | GitHub CLI (`gh`), git |
 | **セキュリティ・品質** | Aqua Security Trivy, Stoplight Spectral CLI |
 | **エディタ拡張** | Kotlin, Java Extension Pack, Gradle, Spectral, Trivy, Atlassian (Jira / Bitbucket), Google Antigravity |
+
+---
+
+## 🤖 提供エージェントスキル (Antigravity Skills)
+
+`.agents/skills/` 配下に、リポジトリ横断で利用可能な共通スキルが配置されています：
+
+| スキル | 説明 |
+| :--- | :--- |
+| **`start-feature-worktree`** | 作業専用の Git feature worktree を作成し、デフォルトブランチの直接変更を防止 |
+| **`conventional-commit`** | Conventional Commits 仕様に基づいたコミットメッセージの作成 |
+| **`commit-push-pr`** | 変更のプッシュ、GitHub PR の作成、作業用 worktree の自動クリーンアップ |
+| **`bitbucket`** | Atlassian Bitbucket Cloud REST API (v2) によるリポジトリ・PR・パイプライン操作 |
+
