@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    name: Validate Skills & Configuration
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Validate Node.js scripts syntax
+        run: |
+          node --check .agents/skills/bitbucket/scripts/bb.js
+
+      - name: Validate Skills frontmatter
+        run: |
+          for file in .agents/skills/*/SKILL.md; do
+            echo "Validating $file..."
+            head -n 1 "$file" | grep -q '^---$' || { echo "ERROR: Missing YAML frontmatter start in $file"; exit 1; }
+            grep -q '^name: ' "$file" || { echo "ERROR: Missing 'name' field in $file"; exit 1; }
+            grep -q '^description:' "$file" || { echo "ERROR: Missing 'description' field in $file"; exit 1; }
+          done
+          echo "All skills validated successfully."
+
+      - name: Validate devcontainer.json syntax
+        run: |
+          node -e 'JSON.parse(require("fs").readFileSync(".devcontainer/devcontainer.json", "utf8"))'
+          node -e 'JSON.parse(require("fs").readFileSync(".devcontainer/devcontainer-lock.json", "utf8"))'

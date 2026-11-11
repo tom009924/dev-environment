@@ -73,7 +73,7 @@ docker compose up -d
 | カテゴリ | ツール / バージョン |
 | :--- | :--- |
 | **Java / JVM** | OpenJDK 21, Kotlin 1.9.24, Gradle 8.10.2 (SDKMAN) |
-| **JavaScript / Web** | Node.js 20, npm (nvm) |
+| **JavaScript / Web** | Node.js 22 LTS, npm (nvm) |
 | **コンテナ・インフラ** | Docker CLI, Docker Compose v2 (Docker-in-Docker) |
 | **クラウド・CLI** | GitHub CLI (`gh`), git |
 | **セキュリティ・品質** | Aqua Security Trivy, Stoplight Spectral CLI |
@@ -89,6 +89,8 @@ docker compose up -d
 | :--- | :--- |
 | **`start-feature-worktree`** | 作業専用の Git feature worktree を作成し、デフォルトブランチの直接変更を防止 |
 | **`conventional-commit`** | Conventional Commits 仕様に基づいたコミットメッセージの作成 |
-| **`commit-push-pr`** | 変更のプッシュ、GitHub PR の作成、作業用 worktree の自動クリーンアップ |
+| **`commit-push-pr`** | 変更のプッシュ、GitHub (`gh`) / Bitbucket (`bb.js`) PR の作成、作業用 worktree の自動クリーンアップ |
 | **`bitbucket`** | Atlassian Bitbucket Cloud REST API (v2) によるリポジトリ・PR・パイプライン操作 |
+
+AI エージェント向けの共通行動規範および各スキルの詳細仕様は [`AGENTS.md`](AGENTS.md) を参照してください。
 
