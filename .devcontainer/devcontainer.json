@@ -45,6 +45,6 @@
     "GIT_TERMINAL_PROMPT": "0",
     "PATH": "${containerEnv:PATH}:/home/vscode/.local/bin"
   },
-  "postCreateCommand": "bash .devcontainer/post-create.sh",
+  "postCreateCommand": "bash dev-environment/.devcontainer/post-create.sh",
   "remoteUser": "vscode"
 }
