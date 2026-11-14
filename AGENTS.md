@@ -4,7 +4,8 @@
 
 ## 開発環境のアーキテクチャ
 - **マルチリポジトリ構成**: ホストマシンのプロジェクトディレクトリ全体が `/workspaces` にマウントされ、複数のアプリケーションリポジトリ（例: `todo-api`, `dev-environment` 等）を並行して管理・開発します。
-- **提供ランタイム**: OpenJDK 21, Kotlin 1.9+, Gradle 8.10+, Node.js 22 LTS, Docker-in-Docker, GitHub CLI (`gh`), Atlassian / Bitbucket 連携ツール
+- **提供ランタイム**: OpenJDK 21, Kotlin 2.2, Gradle 8.14, Node.js 22 LTS, Docker-in-Docker, GitHub CLI (`gh`), Bitbucket CLI (`bb`)
+- **グローバルスキルの自動認識**: Dev Container 起動時に `postCreateCommand` (`scripts/setup-skills.sh`) が実行され、`~/.gemini/config/skills` および `~/.copilot/skills` に自動リンクされます。これにより、`/workspaces` 配下のどの個別アプリケーションリポジトリでエージェントを動かしていても、本共通スキルが常に自動認識・利用可能です。また `~/.local/bin/bb` に Bitbucket CLI ヘルパーが配置され、PATH 経由で即座に実行できます。
 
 ## 共通開発ルール
 1. **Worktree 分離**: コード変更を伴うタスクは、デフォルトブランチ（`main` 等）を直接変更せず、必ず専用の feature worktree（`/tmp/<worktree-name>` 等）を作成して実施すること（[`start-feature-worktree`](.agents/skills/start-feature-worktree/SKILL.md) 参照）。

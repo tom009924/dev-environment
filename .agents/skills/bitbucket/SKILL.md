@@ -30,20 +30,22 @@ description: >-
 
 ---
 
-## 2. CLI ヘルパー (`scripts/bb.js`) の使い方
+## 2. CLI ヘルパー (`bb` / `scripts/bb.js`) の使い方
 
 Node.js 標準の `fetch` を使用しており、外部依存パッケージなしで動作します。
+`setup-skills.sh` 実行後は `PATH` に `bb` コマンドとして登録されているため、どのディレクトリからでも直接 `bb` コマンドとして呼び出せます。
 
 ### 基本コマンド例
 
 ```bash
-# スクリプトの相対パス (例: カレントディレクトリから)
-BB="./.agents/skills/bitbucket/scripts/bb.js"
-# またはグローバルパス
-# BB="~/.gemini/config/skills/bitbucket/scripts/bb.js"
+# PATH が通っている場合は直接 bb コマンドを実行可能
+bb pr list
+
+# または直接スクリプトを実行
+BB="node /workspaces/dev-environment/.agents/skills/bitbucket/scripts/bb.js"
 
 # 1. リポジトリ情報の確認
-node $BB repo info
+bb repo info
 
 # 2. プルリクエスト (PR) の一覧取得 (OPEN)
 node $BB pr list
