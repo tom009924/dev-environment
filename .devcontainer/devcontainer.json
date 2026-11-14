@@ -20,9 +20,7 @@
         "vscjava.vscode-java-pack",
         "vscjava.vscode-gradle",
         "Google.google-antigravity",
-        "stoplight.spectral",
-        "AquaSecurityOfficial.trivy-vulnerability-scanner",
-        "Atlassian.atlascode"
+        "stoplight.spectral"
       ],
       "settings": {
         "java.import.gradle.java.home": "/usr/lib/jvm/msopenjdk-current",
