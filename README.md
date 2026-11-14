@@ -76,8 +76,8 @@ docker compose up -d
 | **JavaScript / Web** | Node.js 22 LTS, npm (nvm) |
 | **コンテナ・インフラ** | Docker CLI, Docker Compose v2 (Docker-in-Docker) |
 | **クラウド・CLI** | GitHub CLI (`gh`), git |
-| **セキュリティ・品質** | Aqua Security Trivy, Stoplight Spectral CLI |
-| **エディタ拡張** | Kotlin, Java Extension Pack, Gradle, Spectral, Trivy, Atlassian (Jira / Bitbucket), Google Antigravity |
+| **セキュリティ・品質** | Stoplight Spectral CLI (`@stoplight/spectral-cli` + OWASP ruleset) |
+| **エディタ拡張** | Kotlin, Java Extension Pack, Gradle, Spectral, Aqua Security Trivy, Atlassian (Jira / Bitbucket), Google Antigravity |
 
 ---
 
