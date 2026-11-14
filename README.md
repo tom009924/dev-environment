@@ -72,7 +72,7 @@ docker compose up -d
 
 | カテゴリ | ツール / バージョン |
 | :--- | :--- |
-| **Java / JVM** | OpenJDK 21, Kotlin 1.9.24, Gradle 8.10.2 (SDKMAN) |
+| **Java / JVM** | OpenJDK 21, Kotlin 2.2, Gradle 8.14 (SDKMAN) |
 | **JavaScript / Web** | Node.js 22 LTS, npm (nvm) |
 | **コンテナ・インフラ** | Docker CLI, Docker Compose v2 (Docker-in-Docker) |
 | **クラウド・CLI** | GitHub CLI (`gh`), git |
@@ -93,4 +93,7 @@ docker compose up -d
 | **`bitbucket`** | Atlassian Bitbucket Cloud REST API (v2) によるリポジトリ・PR・パイプライン操作 |
 
 AI エージェント向けの共通行動規範および各スキルの詳細仕様は [`AGENTS.md`](AGENTS.md) を参照してください。
+
+> [!TIP]
+> Dev Container 起動時に `postCreateCommand` により `~/.gemini/config/skills` および `~/.copilot/skills` へ自動シンボリックリンクが作成されるため、どの個別プロジェクトを開いていてもエージェントがこれらの共通スキルを自動認識します。また、Bitbucket CLI ヘルパーは `PATH` に `bb` コマンドとして登録されます。
 

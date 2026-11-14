@@ -49,10 +49,16 @@ Use this skill to finish repository changes made in a dedicated feature worktree
      ```
 
    - **Bitbucket Cloud repositories**:
-     Use the `bitbucket` skill helper script (`bb.js`) or Bitbucket Cloud REST API:
+     Use the `bb` CLI helper command (or invoke `bb.js` directly):
 
      ```bash
-     node /workspaces/dev-environment/.agents/skills/bitbucket/scripts/bb.js pr create --title "<title>" --source <branch-name> --dest <default-branch> --description "<summary and checks>"
+     bb pr create --title "<title>" --source <branch-name> --dest <default-branch> --description "<summary and checks>"
+     ```
+
+     Or fallback:
+
+     ```bash
+     node "${DEV_ENV_DIR:-/workspaces/dev-environment}/.agents/skills/bitbucket/scripts/bb.js" pr create --title "<title>" --source <branch-name> --dest <default-branch> --description "<summary and checks>"
      ```
 
    If pull-request creation is unavailable or authentication fails, preserve the pushed branch and worktree and report the blocker and exact retry command to the user.

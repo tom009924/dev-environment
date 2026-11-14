@@ -5,8 +5,8 @@ RUN rm -f /etc/apt/sources.list.d/yarn.list /etc/apt/sources.list.d/yarn*.list
 
 USER vscode
 RUN bash -c "source /usr/local/sdkman/bin/sdkman-init.sh \
-    && sdk install kotlin 1.9.24 \
-    && sdk install gradle 8.10.2 \
+    && sdk install kotlin 2.2.0 \
+    && sdk install gradle 8.14 \
     && sdk flush temp \
     && rm -rf /usr/local/sdkman/tmp/*" \
     && bash -c "source /usr/local/share/nvm/nvm.sh \
@@ -14,4 +14,4 @@ RUN bash -c "source /usr/local/sdkman/bin/sdkman-init.sh \
     && nvm alias default 22 \
     && npm install -g @stoplight/spectral-cli @stoplight/spectral-owasp-ruleset --registry=https://registry.npmjs.org"
 
-ENV PATH="/usr/local/sdkman/candidates/kotlin/current/bin:${PATH}"
+ENV PATH="/home/vscode/.local/bin:/usr/local/sdkman/candidates/kotlin/current/bin:${PATH}"

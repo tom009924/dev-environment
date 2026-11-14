@@ -43,10 +43,8 @@
   },
   "remoteEnv": {
     "GIT_TERMINAL_PROMPT": "0",
-    "GIT_AUTHOR_NAME": "t.masuda",
-    "GIT_AUTHOR_EMAIL": "",
-    "GIT_COMMITTER_NAME": "t.masuda",
-    "GIT_COMMITTER_EMAIL": ""
+    "PATH": "${containerEnv:PATH}:/home/vscode/.local/bin"
   },
+  "postCreateCommand": "bash .devcontainer/post-create.sh",
   "remoteUser": "vscode"
 }
