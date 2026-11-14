@@ -11,9 +11,6 @@
     "ghcr.io/devcontainers/features/docker-in-docker:4": {
       "moby": true,
       "dockerDashComposeVersion": "v2"
-    },
-    "ghcr.io/devcontainers/features/node:1": {
-      "version": "22"
     }
   },
   "customizations": {
@@ -42,8 +39,7 @@
     }
   },
   "remoteEnv": {
-    "GIT_TERMINAL_PROMPT": "0",
-    "PATH": "${containerEnv:PATH}:/home/vscode/.local/bin"
+    "GIT_TERMINAL_PROMPT": "0"
   },
   "postCreateCommand": "bash dev-environment/.devcontainer/post-create.sh",
   "remoteUser": "vscode"
