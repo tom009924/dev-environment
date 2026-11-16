@@ -78,7 +78,7 @@ async function apiRequest(path, { method = 'GET', body = null, authHeader, rawTe
   const url = path.startsWith('http') ? path : `${API_BASE}${path}`;
   const headers = {
     'Authorization': authHeader,
-    'Accept': 'application/json',
+    'Accept': rawText ? '*/*' : 'application/json',
   };
 
   if (body && typeof body === 'object') {
@@ -427,6 +427,57 @@ async function handlePipeline(subcmd, positional, flags, config) {
       authHeader
     });
     console.log(`Pipeline #${data.build_number} triggered for branch '${branch}'! UUID: ${data.uuid}`);
+  } else if (subcmd === 'steps') {
+    const uuid = positional[0] || flags.uuid;
+    if (!uuid) {
+      console.error('Usage: bb.js pipeline steps <pipeline-uuid>');
+      process.exit(1);
+    }
+    const data = await apiRequest(`/repositories/${workspace}/${repo}/pipelines/${encodeURIComponent(uuid)}/steps/`, { authHeader });
+    if (flags.json) return console.log(JSON.stringify(data, null, 2));
+
+    const steps = data.values || [];
+    if (steps.length === 0) {
+      console.log(`No steps found for pipeline ${uuid}.`);
+      return;
+    }
+    console.log(`Steps in pipeline ${uuid}:`);
+    for (const s of steps) {
+      const state = s.state?.result?.name || s.state?.name || 'UNKNOWN';
+      const duration = s.duration_in_seconds != null ? `${s.duration_in_seconds}s` : '';
+      console.log(`[${state.padEnd(10)}] ${(s.name || 'unnamed').padEnd(36)} (${duration}) UUID: ${s.uuid}`);
+    }
+  } else if (subcmd === 'log') {
+    const uuid = positional[0] || flags.uuid;
+    let stepUuid = positional[1] || flags.step;
+    if (!uuid) {
+      console.error('Usage: bb.js pipeline log <pipeline-uuid> [step-uuid] [--tail <n>]');
+      process.exit(1);
+    }
+    if (!stepUuid) {
+      const stepsData = await apiRequest(`/repositories/${workspace}/${repo}/pipelines/${encodeURIComponent(uuid)}/steps/`, { authHeader });
+      const steps = stepsData.values || [];
+      const targetStep =
+        steps.find((s) => s.state?.result?.name === 'FAILED') ||
+        [...steps].reverse().find((s) => s.state?.result?.name !== 'NOT_RUN') ||
+        steps[0];
+      if (!targetStep) {
+        console.error(`No steps found for pipeline ${uuid}.`);
+        process.exit(1);
+      }
+      stepUuid = targetStep.uuid;
+      console.error(`Step: ${targetStep.name || 'unnamed'} (${targetStep.state?.result?.name || targetStep.state?.name}) ${stepUuid}`);
+    }
+    const logText = await apiRequest(
+      `/repositories/${workspace}/${repo}/pipelines/${encodeURIComponent(uuid)}/steps/${encodeURIComponent(stepUuid)}/log`,
+      { authHeader, rawText: true }
+    );
+    const tailCount = flags.tail ? Number(flags.tail) : 0;
+    if (Number.isFinite(tailCount) && tailCount > 0) {
+      console.log(logText.split('\n').slice(-tailCount).join('\n'));
+    } else {
+      console.log(logText);
+    }
   } else {
     console.error(`Unknown pipeline command: ${subcmd}`);
     process.exit(1);
@@ -529,6 +580,8 @@ Commands:
   pr comment <id> --message "m" Post comment to PR
   pipeline list                 List recent pipeline builds
   pipeline get <uuid>           Get pipeline details
+  pipeline steps <uuid>         List steps in a pipeline
+  pipeline log <uuid> [step]    Get step log (auto-selects FAILED step if omitted; --tail <n>)
   pipeline trigger [branch]     Trigger a pipeline run
   commit list [branch]          List recent commits
   commit statuses <hash>        Get commit build statuses

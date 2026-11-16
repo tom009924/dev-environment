@@ -80,9 +80,11 @@ node $BB pr decline <pr-id>
 node $BB branch list
 node $BB branch create feature/new-feature main
 
-# 12. パイプライン (CI/CD) の一覧とトリガー
+# 12. パイプライン (CI/CD) の一覧・ステップ・ログ取得・トリガー
 node $BB pipeline list
 node $BB pipeline get <pipeline-uuid>
+node $BB pipeline steps <pipeline-uuid>
+node $BB pipeline log <pipeline-uuid> [step-uuid] --tail 100
 node $BB pipeline trigger main
 
 # 13. コミット履歴とビルドステータス
