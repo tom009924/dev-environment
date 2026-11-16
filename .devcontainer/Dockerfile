@@ -1,7 +1,8 @@
 FROM mcr.microsoft.com/devcontainers/java:1-21-bookworm
 
 USER root
-RUN rm -f /etc/apt/sources.list.d/yarn.list /etc/apt/sources.list.d/yarn*.list
+RUN rm -f /etc/apt/sources.list.d/yarn.list /etc/apt/sources.list.d/yarn*.list \
+    && curl -fsSL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin
 
 USER vscode
 RUN bash -c "source /usr/local/sdkman/bin/sdkman-init.sh \
