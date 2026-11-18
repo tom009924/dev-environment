@@ -21,7 +21,16 @@ chmod +x "${DEV_ENV_DIR}/.agents/skills/bitbucket/scripts/bb.js"
 ln -sfn "${DEV_ENV_DIR}/.agents/skills/bitbucket/scripts/bb.js" "${HOME}/.local/bin/bb"
 echo " Linked Bitbucket CLI helper: ~/.local/bin/bb -> bb.js"
 
-# 4. GitHub CLI (gh) の認証同期（未ログイン時のみ、失敗してもセットアップは継続）
+# 4. Antigravity CLI セキュリティ設定の初期配置（未設定時のみ）
+ANTIGRAVITY_CLI_SETTINGS_SRC="${DEV_ENV_DIR}/config/antigravity-cli/settings.json"
+ANTIGRAVITY_CLI_SETTINGS_DST="${HOME}/.gemini/antigravity-cli/settings.json"
+if [ -f "${ANTIGRAVITY_CLI_SETTINGS_SRC}" ] && [ ! -f "${ANTIGRAVITY_CLI_SETTINGS_DST}" ]; then
+    mkdir -p "${HOME}/.gemini/antigravity-cli"
+    cp "${ANTIGRAVITY_CLI_SETTINGS_SRC}" "${ANTIGRAVITY_CLI_SETTINGS_DST}"
+    echo " Initialized Antigravity CLI security settings: ${ANTIGRAVITY_CLI_SETTINGS_DST}"
+fi
+
+# 5. GitHub CLI (gh) の認証同期（未ログイン時のみ、失敗してもセットアップは継続）
 if command -v gh >/dev/null 2>&1 && ! gh auth status >/dev/null 2>&1; then
     GH_TOKEN_FROM_GIT="$(printf "protocol=https\nhost=github.com\n\n" | GIT_TERMINAL_PROMPT=0 git credential fill 2>/dev/null | sed -n 's/^password=//p' || true)"
     if [ -n "${GH_TOKEN_FROM_GIT}" ]; then

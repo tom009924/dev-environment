@@ -97,3 +97,22 @@ AI エージェント向けの共通行動規範および各スキルの詳細�
 > [!TIP]
 > Dev Container 起動時に `postCreateCommand` により `~/.gemini/config/skills` および `~/.copilot/skills` へ自動シンボリックリンクが作成されるため、どの個別プロジェクトを開いていてもエージェントがこれらの共通スキルを自動認識します。また、Bitbucket CLI ヘルパーは `PATH` に `bb` コマンドとして登録されます。
 
+---
+
+## 🔒 セキュリティ・コードベース秘匿設定
+
+機密コードベースや認証情報を保護するため、以下のセキュリティ設定を組み込んでいます。
+
+### 自動適用される設定
+- **VS Code テレメトリ無効化**: `.devcontainer/devcontainer.json` にて `"telemetry.telemetryLevel": "off"` を設定済みです。
+- **Antigravity CLI セキュリティ初期設定**: `scripts/setup-skills.sh` により、`~/.gemini/antigravity-cli/settings.json` が未作成の場合に `config/antigravity-cli/settings.json`（`enableTelemetry: false` および `.env*`, `*.pem`, `*.key`, `secrets/` への `read_file` 拒否ルール）を自動配置します。
+
+### 初回起動時に UI / アカウント側で実施する設定
+Antigravity 拡張機能（v1.9.0 以降）のテレメトリや実行権限プリセットは拡張機能 UI 側で管理されるため、初回起動時に以下を確認してください：
+
+1. **テレメトリの無効化**: コマンドパレットから `Antigravity: Manage Data Sharing & Telemetry` を開くか、**Settings > Account** の **Enable Telemetry** を **OFF** にする。
+2. **実行権限プリセット**: **Settings > General > Global Permissions > Permission Preset** を **Default**（Terminal Sandbox 有効）または **Request Review** に設定する（**Turbo** は使用しない）。
+3. **`.gitignore` 対象ファイルの保護**: **Agent Gitignore Access** を **OFF**（または **Strict Mode** を **ON**）にする。
+4. **アカウント種別の確認**: 業務コードベースを扱う場合は、Zero Model Training 保証のある **Google Cloud / Enterprise** アカウントでサインインする。
+
+
