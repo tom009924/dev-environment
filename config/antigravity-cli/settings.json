@@ -1,0 +1,11 @@
+{
+  "enableTelemetry": false,
+  "permissions": {
+    "deny": [
+      "read_file(.env*)",
+      "read_file(**/*.pem)",
+      "read_file(**/*.key)",
+      "read_file(**/secrets/**)"
+    ]
+  }
+}
